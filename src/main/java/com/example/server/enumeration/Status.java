@@ -4,9 +4,9 @@ public enum Status {
     SERVER_UP("SERVER_UP"),
     SERVER_DOWN("SERVER_DOWN");
 
-    private String status;
+    private final String status;
 
-    Status(Status status){
+    Status(String status){
         this.status = status;
     }
 
