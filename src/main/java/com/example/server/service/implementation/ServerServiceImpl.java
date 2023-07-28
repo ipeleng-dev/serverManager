@@ -3,17 +3,25 @@ package com.example.server.service.implementation;
 import com.example.server.model.Server;
 import com.example.server.repo.ServerRepo;
 import com.example.server.service.ServerService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @RequiredArgsConstructor
+@Service
+@Transactional
+@Slf4j
 public class ServerServiceImpl implements ServerService {
 
     private final ServerRepo serverRepo;
 
     @Override
     public Server create(Server server) {
+        log.info("Saving new Server: {}", server.getName());
+        server.setImageUrl(setServerImageUrl());
         return null;
     }
 
@@ -41,4 +49,10 @@ public class ServerServiceImpl implements ServerService {
     public Boolean delete(Long id) {
         return null;
     }
+
+    //methods
+    private String setServerImageUrl() {
+        return null;
+    }
+
 }
