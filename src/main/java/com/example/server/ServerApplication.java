@@ -3,10 +3,15 @@ package com.example.server;
 import com.example.server.enumeration.Status;
 import com.example.server.model.Server;
 import com.example.server.repo.ServerRepo;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 import static com.example.server.enumeration.Status.SERVER_DOWN;
 import static com.example.server.enumeration.Status.SERVER_UP;
@@ -35,5 +40,29 @@ public class ServerApplication {
 					"http://localhost:8080/server/image/server4.jpg", SERVER_UP));
 		};
 	}
+
+	@Bean
+	public CorsFilter corsFilter(){
+		UrlBasedCorsConfigurationSource UrlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+		corsConfiguration.setAllowCredentials(true);
+
+		corsConfiguration.setAllowedOrigins(Arrays.asList("Http://localhost:3000", "http://localhost:4200"));
+
+		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin","Access-Control-Allow-Origin","Content-type","Accept","Jwt-Token",
+														  "Authorization","Origin, Accept","X-Requested-With","Access-Control-Requested-Headers"));
+
+		corsConfiguration.setExposedHeaders(Arrays.asList("Origin","Content-type","Accept","Jwt-Token","Authorization","Access-Control-Allow-Origin",
+														  "Access-Control-Allow-Credentials","Filename"));
+
+		corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST","PUT","PATCH","DELETE","OPTIONS"));
+
+		UrlBasedCorsConfigurationSource.registerCorsConfiguration("/**",corsConfiguration);
+
+        return new CorsFilter();
+    }
+
 
 }
